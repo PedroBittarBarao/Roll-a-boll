@@ -12,14 +12,17 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private int count;
+    private int seconds;
 
 
+    public TextMeshProUGUI TimerText;
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public AudioClip winSound;
     public AudioClip coinSound;
     AudioSource audioSource;
+    
 
     void Start()
     {
@@ -28,10 +31,11 @@ public class PlayerController : MonoBehaviour
         SetCountText();
         winTextObject.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+        InvokeRepeating("SetTimerText", 0, 1.0f);
     }
 
     void OnReload()
-    { 
+    {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Minigame");
     }
 
@@ -66,4 +70,18 @@ public class PlayerController : MonoBehaviour
     {
         countText.text = "Count: " + count.ToString();
     }
+
+    void SetTimerText()
+    {
+        if (count < 8)
+        {
+            TimerText.text = seconds.ToString();
+            seconds += 1;
+        }
+    }
+
+    void OnMenu(){
+        UnityEngine.SceneManagement.SceneManager.LoadScene("menu");
+    }
+
 }
